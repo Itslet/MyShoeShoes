@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Shoe" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="ShoeContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Shoes" EntityType="Shoe.Shoe" />
+    <EntitySet Name="ShoeDescriptions" EntityType="Shoe.ShoeDescription" />
+    <AssociationSet Name="ShoeDescriptionShoe" Association="Shoe.ShoeDescriptionShoe">
+      <End Role="ShoeDescription" EntitySet="ShoeDescriptions" />
+      <End Role="Shoe" EntitySet="Shoes" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="ShoeType">
+    <Property Type="Int32" Name="Hakken" Nullable="false" />
+    <Property Type="Int32" Name="Laarzen" Nullable="false" />
+    <Property Type="Int32" Name="Slippers" Nullable="false" />
+    <Property Type="Int32" Name="Gympies" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Shoe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShoeType" Type="Shoe.ShoeType" Nullable="false" />
+    <NavigationProperty Name="ShoeDescription" Relationship="Shoe.ShoeDescriptionShoe" FromRole="Shoe" ToRole="ShoeDescription" />
+    <Property Type="Int32" Name="ShoeDescriptionId" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoeDescription">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="ShoeDetails" Nullable="false" />
+    <Property Type="String" Name="ShoeShort" Nullable="false" />
+    <NavigationProperty Name="Shoes" Relationship="Shoe.ShoeDescriptionShoe" FromRole="ShoeDescription" ToRole="Shoe" />
+  </EntityType>
+  <Association Name="ShoeDescriptionShoe">
+    <End Type="Shoe.ShoeDescription" Role="ShoeDescription" Multiplicity="1" />
+    <End Type="Shoe.Shoe" Role="Shoe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShoeDescription">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shoe">
+        <PropertyRef Name="ShoeDescriptionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Shoecolor" BaseType="Shoe.Shoe">
+    <Property Type="String" Name="Color" Nullable="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoeStoreContainer" CdmEntityContainer="ShoeContainer">
+    <EntitySetMapping Name="Shoes">
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.Shoe)">
+        <MappingFragment StoreEntitySet="Shoes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ComplexProperty Name="ShoeType" TypeName="Shoe.ShoeType">
+            <ScalarProperty Name="Hakken" ColumnName="ShoeType_Hakken" />
+            <ScalarProperty Name="Laarzen" ColumnName="ShoeType_Laarzen" />
+            <ScalarProperty Name="Slippers" ColumnName="ShoeType_Slippers" />
+            <ScalarProperty Name="Gympies" ColumnName="ShoeType_Gympies" />
+          </ComplexProperty>
+          <ScalarProperty Name="ShoeDescriptionId" ColumnName="ShoeDescriptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.Shoecolor)">
+        <MappingFragment StoreEntitySet="Shoes_Shoecolor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoeDescriptions">
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.ShoeDescription)">
+        <MappingFragment StoreEntitySet="ShoeDescriptions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ShoeDetails" ColumnName="ShoeDetails" />
+          <ScalarProperty Name="ShoeShort" ColumnName="ShoeShort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Shoe.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ShoeStoreContainer">
+    <EntitySet Name="Shoes" EntityType="Shoe.Store.Shoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoeDescriptions" EntityType="Shoe.Store.ShoeDescriptions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Shoes_Shoecolor" EntityType="Shoe.Store.Shoes_Shoecolor" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ShoeDescriptionShoe" Association="Shoe.Store.ShoeDescriptionShoe">
+      <End Role="ShoeDescription" EntitySet="ShoeDescriptions" />
+      <End Role="Shoe" EntitySet="Shoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shoecolor_inherits_Shoe" Association="Shoe.Store.FK_Shoecolor_inherits_Shoe">
+      <End Role="Shoe" EntitySet="Shoes" />
+      <End Role="Shoecolor" EntitySet="Shoes_Shoecolor" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Shoes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShoeType_Hakken" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Laarzen" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Slippers" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Gympies" Type="int" Nullable="false" />
+    <Property Name="ShoeDescriptionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoeDescriptions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShoeDetails" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ShoeShort" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shoes_Shoecolor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ShoeDescriptionShoe">
+    <End Role="ShoeDescription" Type="Shoe.Store.ShoeDescriptions" Multiplicity="1" />
+    <End Role="Shoe" Type="Shoe.Store.Shoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShoeDescription">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shoe">
+        <PropertyRef Name="ShoeDescriptionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shoecolor_inherits_Shoe">
+    <End Role="Shoe" Type="Shoe.Store.Shoes" Multiplicity="1" />
+    <End Role="Shoecolor" Type="Shoe.Store.Shoes_Shoecolor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Shoe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shoecolor">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

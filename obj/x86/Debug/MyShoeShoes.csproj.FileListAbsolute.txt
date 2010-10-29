@@ -1,0 +1,6 @@
+D:\codeschudder\MyShoeShoes\MyShoeShoes\bin\Debug\MyShoeShoes.exe.config
+D:\codeschudder\MyShoeShoes\MyShoeShoes\bin\Debug\MyShoeShoes.exe
+D:\codeschudder\MyShoeShoes\MyShoeShoes\bin\Debug\MyShoeShoes.pdb
+D:\codeschudder\MyShoeShoes\MyShoeShoes\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\codeschudder\MyShoeShoes\MyShoeShoes\obj\x86\Debug\MyShoeShoes.exe
+D:\codeschudder\MyShoeShoes\MyShoeShoes\obj\x86\Debug\MyShoeShoes.pdb

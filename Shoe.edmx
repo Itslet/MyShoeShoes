@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Shoe.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ShoeStoreContainer">
+    <EntitySet Name="Shoes" EntityType="Shoe.Store.Shoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoeDescriptions" EntityType="Shoe.Store.ShoeDescriptions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Shoes_Shoecolor" EntityType="Shoe.Store.Shoes_Shoecolor" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ShoeDescriptionShoe" Association="Shoe.Store.ShoeDescriptionShoe">
+      <End Role="ShoeDescription" EntitySet="ShoeDescriptions" />
+      <End Role="Shoe" EntitySet="Shoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shoecolor_inherits_Shoe" Association="Shoe.Store.FK_Shoecolor_inherits_Shoe">
+      <End Role="Shoe" EntitySet="Shoes" />
+      <End Role="Shoecolor" EntitySet="Shoes_Shoecolor" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Shoes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShoeType_Hakken" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Laarzen" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Slippers" Type="int" Nullable="false" />
+    <Property Name="ShoeType_Gympies" Type="int" Nullable="false" />
+    <Property Name="ShoeDescriptionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoeDescriptions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShoeDetails" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ShoeShort" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shoes_Shoecolor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ShoeDescriptionShoe">
+    <End Role="ShoeDescription" Type="Shoe.Store.ShoeDescriptions" Multiplicity="1" />
+    <End Role="Shoe" Type="Shoe.Store.Shoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShoeDescription">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shoe">
+        <PropertyRef Name="ShoeDescriptionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shoecolor_inherits_Shoe">
+    <End Role="Shoe" Type="Shoe.Store.Shoes" Multiplicity="1" />
+    <End Role="Shoecolor" Type="Shoe.Store.Shoes_Shoecolor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Shoe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shoecolor">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Shoe" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="ShoeContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Shoes" EntityType="Shoe.Shoe" />
+          <EntitySet Name="ShoeDescriptions" EntityType="Shoe.ShoeDescription" />
+          <AssociationSet Name="ShoeDescriptionShoe" Association="Shoe.ShoeDescriptionShoe">
+            <End Role="ShoeDescription" EntitySet="ShoeDescriptions" />
+            <End Role="Shoe" EntitySet="Shoes" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="ShoeType">
+          <Property Type="Int32" Name="Hakken" Nullable="false" />
+          <Property Type="Int32" Name="Laarzen" Nullable="false" />
+          <Property Type="Int32" Name="Slippers" Nullable="false" />
+          <Property Type="Int32" Name="Gympies" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Shoe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShoeType" Type="Shoe.ShoeType" Nullable="false" />
+          <NavigationProperty Name="ShoeDescription" Relationship="Shoe.ShoeDescriptionShoe" FromRole="Shoe" ToRole="ShoeDescription" />
+          <Property Type="Int32" Name="ShoeDescriptionId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoeDescription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ShoeDetails" Nullable="false" />
+          <Property Type="String" Name="ShoeShort" Nullable="false" />
+          <NavigationProperty Name="Shoes" Relationship="Shoe.ShoeDescriptionShoe" FromRole="ShoeDescription" ToRole="Shoe" />
+        </EntityType>
+        <Association Name="ShoeDescriptionShoe">
+          <End Type="Shoe.ShoeDescription" Role="ShoeDescription" Multiplicity="1" />
+          <End Type="Shoe.Shoe" Role="Shoe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoeDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shoe">
+              <PropertyRef Name="ShoeDescriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Shoecolor" BaseType="Shoe.Shoe" >
+          <Property Type="String" Name="Color" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoeStoreContainer" CdmEntityContainer="ShoeContainer">
+    <EntitySetMapping Name="Shoes">
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.Shoe)">
+        <MappingFragment StoreEntitySet="Shoes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ComplexProperty Name="ShoeType" TypeName="Shoe.ShoeType">
+            <ScalarProperty Name="Hakken" ColumnName="ShoeType_Hakken" />
+            <ScalarProperty Name="Laarzen" ColumnName="ShoeType_Laarzen" />
+            <ScalarProperty Name="Slippers" ColumnName="ShoeType_Slippers" />
+            <ScalarProperty Name="Gympies" ColumnName="ShoeType_Gympies" />
+          </ComplexProperty>
+          <ScalarProperty Name="ShoeDescriptionId" ColumnName="ShoeDescriptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.Shoecolor)">
+        <MappingFragment StoreEntitySet="Shoes_Shoecolor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoeDescriptions">
+      <EntityTypeMapping TypeName="IsTypeOf(Shoe.ShoeDescription)">
+        <MappingFragment StoreEntitySet="ShoeDescriptions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ShoeDetails" ColumnName="ShoeDetails" />
+          <ScalarProperty Name="ShoeShort" ColumnName="ShoeShort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Shoe" DisplayType="true" ShowGrid="true" >
+        <EntityTypeShape EntityType="Shoe.Shoe" Width="1.75" PointX="0.5" PointY="0.5" Height="1.787985026041667" IsExpanded="true" />
+        <EntityTypeShape EntityType="Shoe.ShoeDescription" Width="1.5" PointX="0.5" PointY="2.75" Height="1.787985026041667" />
+        <AssociationConnector Association="Shoe.ShoeDescriptionShoe">
+          <ConnectorPoint PointX="1.25" PointY="2.75" />
+          <ConnectorPoint PointX="1.25" PointY="2.287985026041667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Shoe.Shoecolor" Width="1.5" PointX="2.875" PointY="0.75" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="Shoe.Shoecolor" >
+          <ConnectorPoint PointX="2.25" PointY="1.3555403645833333" />
+          <ConnectorPoint PointX="2.875" PointY="1.3555403645833333" />
+        </InheritanceConnector>
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
